@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<title>顏值評分系統</title>
+<style>
+    body {
+        font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        background: #ffffff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .container {
+        max-width: 1000px; /* 更大容器寬度 */
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    h1 {
+        text-align: center;
+        color: #222222;
+        margin-bottom: 25px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    input[type="file"] {
+        padding: 10px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button {
+        background: #4a90e2;
+        border: none;
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    button:hover {
+        background: #357abd;
+    }
+    .result, .error {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .result h2 {
+        color: #2d8a4a;
+        margin-bottom: 15px;
+    }
+    .error {
+        color: #d93025;
+        font-weight: bold;
+        background-color: #fdecea;
+        border: 1px solid #f5c2c0;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    img {
+        width: 100%;        /* 滿寬容器 */
+        height: auto;       /* 等比例高度 */
+        max-height: 800px;  /* 最大高度 */
+        border-radius: 8px;
+        display: block;
+        margin: 15px auto 0 auto;
+        object-fit: contain;
+        box-sizing: border-box;
+    }
+    @media (max-width: 1100px) {
+        .container {
+            max-width: 100%;
+            padding: 0 10px;
+        }
+        button {
+            font-size: 14px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>上傳照片計算顏值分數</h1>
+    <form action="/score" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required />
+        <button type="submit">送出</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if score is defined %}
+        <div class="result">
+            <h2>顏值分數：{{ score }}</h2>
+        </div>
+    {% endif %}
+
+    {% if img_data is defined %}
+        <img src="data:image/jpeg;base64,{{ img_data }}" alt="Uploaded Photo" />
+    {% endif %}
+</div>
+</body>
+</html>
